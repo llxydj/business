@@ -1,0 +1,94 @@
+# Flutter/Dart/Pub related
+.dart_tool/
+.packages
+.pub-cache/
+.pub/
+build/
+.flutter-plugins
+.flutter-plugins-dependencies
+.melos_tool/
+
+# IntelliJ / Android Studio / VS Code
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+.vscode-test/
+
+# iOS / Xcode
+ios/Flutter/Flutter.framework
+ios/Flutter/Flutter.podspec
+ios/ServiceDefinitions.json
+ios/Pods/
+ios/Podfile.lock
+ios/Runner/GeneratedPluginRegistrant.*
+ios/Flutter/Generated.xcconfig
+*.xcworkspace
+*.xcuserdata/
+*.xcuserstate
+*.lock
+*.pbxuser
+DerivedData/
+
+# Android / Gradle
+android/.gradle/
+android/app/build/
+android/build/
+*.apk
+*.aar
+*.ap_
+*.dex
+*.class
+*.log
+*.so
+*.DS_Store
+*.swp
+
+# Windows
+windows/flutter/ephemeral/
+windows/.vs/
+windows/x64/
+
+# macOS
+macos/Flutter/ephemeral/
+*.xcuserstate
+
+# Linux
+linux/flutter/ephemeral/
+
+# Web
+.web/
+
+# Coverage / reports
+coverage/
+test-output/
+
+# Env / Secrets (VERY IMPORTANT 🚨)
+*.env
+*.env.*
+.envrc
+*.key
+*.pem
+*.crt
+*.p12
+*.keystore
+*.jks
+*.secret
+*.secrets
+secret_config.dart
+api_keys.dart
+credentials.json
+google-services.json
+GoogleService-Info.plist
+
+# Misc
+.DS_Store
+Thumbs.db
+*.bak
+*.tmp
+*.swp
+*.swo
+
+# Logs
+*.log
