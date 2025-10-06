@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'pages/home_page.dart';
+import 'pages/about_page.dart';
+import 'pages/contact_page.dart';
+import 'pages/login_screen.dart';
+import 'pages/navigation_wrapper.dart';
 
 void main() {
   runApp(const BusinessFormsApp());
@@ -11,7 +14,7 @@ class BusinessFormsApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Cat Grooming - Business Forms',
+      title: 'Cat Grooming Navigation Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.teal,
@@ -19,7 +22,13 @@ class BusinessFormsApp extends StatelessWidget {
           border: OutlineInputBorder(),
         ),
       ),
-      home: const HomePage(),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const LoginScreen(),
+        '/home': (context) => const NavigationWrapper(),
+        '/about': (context) => const AboutPage(),
+        '/contact': (context) => const ContactPage(),
+      },
     );
   }
 }

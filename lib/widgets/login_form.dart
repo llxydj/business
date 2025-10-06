@@ -8,25 +8,25 @@ class LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<LoginForm> {
-  final _formKey = GlobalKey<FormState>();
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
-  bool _obscure = true;
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  bool obscure = true;
 
   @override
   void dispose() {
-    _emailController.dispose();
-    _passwordController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
     super.dispose();
   }
 
-  void _submit() {
-    if (_formKey.currentState!.validate()) {
-      final email = _emailController.text.trim();
+  void submit() {
+    if (formKey.currentState!.validate()) {
+      final email = emailController.text.trim();
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Login successful for $email (demo)')),
       );
-      // In real app: authenticate
+      // Real authentication logic goes here
     }
   }
 
@@ -37,7 +37,7 @@ class _LoginFormState extends State<LoginForm> {
       child: Padding(
         padding: const EdgeInsets.all(12),
         child: Form(
-          key: _formKey,
+          key: formKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -45,36 +45,45 @@ class _LoginFormState extends State<LoginForm> {
                   style: TextStyle(fontWeight: FontWeight.bold)),
               const SizedBox(height: 8),
               TextFormField(
-                controller: _emailController,
+                controller: emailController,
                 decoration: const InputDecoration(labelText: 'Email'),
                 keyboardType: TextInputType.emailAddress,
                 validator: (val) {
-                  if (val == null || val.trim().isEmpty)
+                  if (val == null || val.trim().isEmpty) {
                     return 'Please enter email';
-                  if (!val.contains('@')) return 'Email must contain "@"';
+                  }
+                  if (!val.contains('@')) {
+                    return 'Email must contain "@"';
+                  }
                   return null;
                 },
               ),
               const SizedBox(height: 8),
               TextFormField(
-                controller: _passwordController,
+                controller: passwordController,
                 decoration: InputDecoration(
                   labelText: 'Password',
                   suffixIcon: IconButton(
                     icon: Icon(
-                        _obscure ? Icons.visibility : Icons.visibility_off),
-                    onPressed: () => setState(() => _obscure = !_obscure),
+                      obscure ? Icons.visibility : Icons.visibility_off,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        obscure = !obscure;
+                      });
+                    },
                   ),
                 ),
-                obscureText: _obscure,
+                obscureText: obscure,
                 validator: (val) {
-                  if (val == null || val.isEmpty)
+                  if (val == null || val.isEmpty) {
                     return 'Please enter password';
+                  }
                   return null;
                 },
               ),
               const SizedBox(height: 10),
-              ElevatedButton(onPressed: _submit, child: const Text('Submit')),
+              ElevatedButton(onPressed: submit, child: const Text('Submit')),
             ],
           ),
         ),

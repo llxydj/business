@@ -8,21 +8,21 @@ class ControllerForm extends StatefulWidget {
 }
 
 class _ControllerFormState extends State<ControllerForm> {
-  final TextEditingController _instructionsController = TextEditingController();
-  String _display = '';
+  final TextEditingController instructionsController = TextEditingController();
+  String display = '';
 
   @override
   void dispose() {
-    _instructionsController.dispose();
+    instructionsController.dispose();
     super.dispose();
   }
 
-  void _show() {
+  void showInstructions() {
     setState(() {
-      _display = _instructionsController.text.trim();
+      display = instructionsController.text.trim();
     });
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Instructions saved (demo)')),
+      const SnackBar(content: Text('Instructions saved (demo)')),
     );
   }
 
@@ -35,21 +35,24 @@ class _ControllerFormState extends State<ControllerForm> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const Text('Special Instructions',
-                style: TextStyle(fontWeight: FontWeight.bold)),
+            const Text(
+              'Special Instructions',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
             const SizedBox(height: 8),
             TextField(
-              controller: _instructionsController,
+              controller: instructionsController,
               decoration: const InputDecoration(
                   labelText: 'Enter instructions for cat makeover'),
               maxLines: 3,
             ),
             const SizedBox(height: 8),
             ElevatedButton(
-                onPressed: _show,
-                child: const Text('Save Instructions & Show')),
+              onPressed: showInstructions,
+              child: const Text('Save Instructions & Show'),
+            ),
             const SizedBox(height: 8),
-            Text('Current: $_display'),
+            Text('Current: $display'),
           ],
         ),
       ),

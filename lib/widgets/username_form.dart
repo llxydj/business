@@ -9,21 +9,20 @@ class UsernameForm extends StatefulWidget {
 }
 
 class _UsernameFormState extends State<UsernameForm> {
-  final _formKey = GlobalKey<FormState>();
-  final TextEditingController _trackingController = TextEditingController();
-  final LocalDataService _service = LocalDataService();
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  final TextEditingController trackingController = TextEditingController();
+  final LocalDataService service = LocalDataService();
 
   @override
   void dispose() {
-    _trackingController.dispose();
+    trackingController.dispose();
     super.dispose();
   }
 
-  void _submitTracking() {
-    if (_formKey.currentState!.validate()) {
-      final id = _trackingController.text.trim();
-      // For demo: add as a simple document record
-      _service.addDocument({
+  void submitTracking() {
+    if (formKey.currentState!.validate()) {
+      final id = trackingController.text.trim();
+      service.addDocument({
         'trackingId': id,
         'status': 'Created',
         'notes': 'Manual create via tracking form'
@@ -31,7 +30,7 @@ class _UsernameFormState extends State<UsernameForm> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Document tracking created: $id')),
       );
-      _trackingController.clear();
+      trackingController.clear();
       setState(() {});
     }
   }
@@ -43,32 +42,39 @@ class _UsernameFormState extends State<UsernameForm> {
       child: Padding(
         padding: const EdgeInsets.all(12),
         child: Form(
-          key: _formKey,
+          key: formKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const Text('Document Tracking — Enter Tracking ID',
-                  style: TextStyle(fontWeight: FontWeight.bold)),
+              const Text(
+                'Document Tracking — Enter Tracking ID',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
               const SizedBox(height: 8),
               TextFormField(
-                controller: _trackingController,
+                controller: trackingController,
                 decoration: const InputDecoration(
                     labelText: 'Tracking ID (e.g., DOC-1234)'),
                 validator: (val) {
-                  if (val == null || val.trim().isEmpty)
+                  if (val == null || val.trim().isEmpty) {
                     return 'Please enter tracking ID';
-                  if (val.trim().length < 3) return 'Tracking ID too short';
+                  }
+                  if (val.trim().length < 3) {
+                    return 'Tracking ID too short';
+                  }
                   return null;
                 },
               ),
               const SizedBox(height: 10),
               ElevatedButton(
-                  onPressed: _submitTracking,
+                  onPressed: submitTracking,
                   child: const Text('Create / Track')),
               const SizedBox(height: 8),
-              const Text('Stored Documents (recent):',
-                  style: TextStyle(fontWeight: FontWeight.w600)),
-              ..._service.getDocuments().reversed.take(3).map((d) {
+              const Text(
+                'Stored Documents (recent):',
+                style: TextStyle(fontWeight: FontWeight.w600),
+              ),
+              ...service.getDocuments().reversed.take(3).map((d) {
                 return ListTile(
                   dense: true,
                   title: Text(d['trackingId'] ?? ''),

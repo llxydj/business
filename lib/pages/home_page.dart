@@ -13,30 +13,41 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // This single scroll page shows all the forms in order so you can test each
     return Scaffold(
-      appBar: AppBar(title: const Text('Cat Grooming — Business Forms')),
-      body: SafeArea(
+      appBar: AppBar(
+        title: const Text('Cat Grooming — Business Forms'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.logout),
+            tooltip: 'Logout',
+            onPressed: () {
+              // Proper logout: pop all routes and push login route
+              Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+            },
+          ),
+        ],
+      ),
+      body: const SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.all(16),
+          padding: EdgeInsets.all(16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: const [
-              UsernameForm(), // Document tracking
+            children: [
+              UsernameForm(),
               SizedBox(height: 20),
-              LoginForm(), // Login (email+password)
+              LoginForm(),
               SizedBox(height: 20),
-              MultiInputForm(), // Pet profile (text + checkbox + switch)
+              MultiInputForm(),
               SizedBox(height: 20),
-              RegistrationForm(), // Registration (name,email,password,confirm)
+              RegistrationForm(),
               SizedBox(height: 20),
-              DropdownForm(), // Select service (ordering)
+              DropdownForm(),
               SizedBox(height: 20),
-              DateTimeForm(), // Pick appointment date & time
+              DateTimeForm(),
               SizedBox(height: 20),
-              ControllerForm(), // Special instructions (controller)
+              ControllerForm(),
               SizedBox(height: 20),
-              ListSavingForm(), // Save booking/order/document to local list
+              ListSavingForm(),
               SizedBox(height: 40),
             ],
           ),
